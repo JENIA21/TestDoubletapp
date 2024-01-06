@@ -16,7 +16,7 @@ class PetResponse(BaseModel):
 
 
 class PetDelete(BaseModel):
-    pass
+    ids: list
 
 
 class PhotoCreate(BaseModel):
