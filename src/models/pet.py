@@ -17,4 +17,4 @@ class Pet(Base):
     name: Mapped[str] = mapped_column(String(50))
     age: Mapped[int]
     is_photo: Mapped[bool]
-    type_pet: Mapped[TypePet]
+    pet_type: Mapped[TypePet]
