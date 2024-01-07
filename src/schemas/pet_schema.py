@@ -3,6 +3,8 @@ import datetime
 from pydantic import BaseModel
 from typing import Union
 
+from models.pet import TypePet
+
 
 class PetSupport(BaseModel):
     id: str
@@ -11,7 +13,7 @@ class PetSupport(BaseModel):
 class PetCreate(BaseModel):
     name: str
     year: int
-    type: str
+    type: TypePet
     photo: list
 
 
@@ -20,9 +22,9 @@ class PetCreateResponse(PetCreate, PetSupport):
 
 
 class PetGet(BaseModel):
-    limit: Union[int, None] = 20
-    offset: Union[int, None] = 0
-    has_photo: Union[bool, None] = None
+    limit: int | None = 20
+    offset: int | None = 0
+    has_photo: bool | None = None
 
 
 class PetGetResponse(BaseModel):

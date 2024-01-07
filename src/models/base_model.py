@@ -9,7 +9,7 @@ class Base(DeclarativeBase):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     created_at: Mapped[datetime] = mapped_column(default=func.now())
-    created_at: Mapped[datetime] = mapped_column(default=func.now())
+    update_at: Mapped[datetime] = mapped_column(onupdate=func.now())
 
 
 @declared_attr.directive
