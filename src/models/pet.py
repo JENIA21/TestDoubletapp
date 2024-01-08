@@ -3,7 +3,7 @@ import enum
 from sqlalchemy import String, Enum
 from sqlalchemy.orm import Mapped, mapped_column
 
-from models.base_model import Base
+from src.models.base_model import Base
 
 
 class TypePet(enum.Enum):
@@ -13,7 +13,8 @@ class TypePet(enum.Enum):
 
 class Pet(Base):
     __tablename__ = "pet"
+    __table_args__ = {'extend_existing': True}
 
     name: Mapped[str] = mapped_column(String(50))
-    age: Mapped[int]
-    pet_type: Mapped[str] = mapped_column(Enum(TypePet))
+    year: Mapped[int]
+    type: Mapped[str] = mapped_column(Enum(TypePet))

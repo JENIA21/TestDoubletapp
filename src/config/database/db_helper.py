@@ -31,10 +31,9 @@ class DatabaseHelper:
     @asynccontextmanager
     async def get_db_session(self):
         from sqlalchemy import exc
-
-        session: AsyncSession = self.session_factory()
         try:
-            yield session
+            async with self.session_factory() as session:
+                yield session
         except exc.SQLAlchemyError as error:
             await session.rollback()
             raise

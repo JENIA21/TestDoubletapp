@@ -7,9 +7,8 @@ from sqlalchemy.orm import DeclarativeBase, declared_attr, Mapped, mapped_column
 class Base(DeclarativeBase):
     __abstarct__ = True
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    created_at: Mapped[datetime] = mapped_column(default=func.now())
-    update_at: Mapped[datetime] = mapped_column(onupdate=func.now())
+    id: Mapped[str] = mapped_column(primary_key=True)
+    created_at: Mapped[datetime]
 
 
 @declared_attr.directive

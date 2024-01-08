@@ -1,24 +1,30 @@
-import datetime
+from datetime import datetime
 
 from pydantic import BaseModel
-from typing import Union
 
 from models.pet import TypePet
+from utils.pet_utils import crate_pet_id
 
 
 class PetSupport(BaseModel):
     id: str
 
 
+class PhotoCreate(PetSupport):
+    file: bytes
+
+
 class PetCreate(BaseModel):
     name: str
     year: int
     type: TypePet
-    photo: list
+    photo: list[PhotoCreate] | None = None
+    created_at: datetime | None = datetime.now()
+    id: str | None = crate_pet_id()
 
 
 class PetCreateResponse(PetCreate, PetSupport):
-    created_at: datetime.datetime
+    pass
 
 
 class PetGet(BaseModel):

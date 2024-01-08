@@ -22,4 +22,4 @@ app = get_application()
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="localhost", reload=True)
+    uvicorn.run("main:app", host="localhost", reload=True, access_log=True)
