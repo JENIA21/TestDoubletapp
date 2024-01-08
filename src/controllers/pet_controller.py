@@ -5,7 +5,7 @@ from starlette.status import HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT
 from schemas.pet_schema import PetCreate, PetCreateResponse
 from services.pet_servise import pet_service
 from utils.key_authentication import get_api_key
-from utils.pet_utils import crate_pet_id
+
 
 router = APIRouter()
 

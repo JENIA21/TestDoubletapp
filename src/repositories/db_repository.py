@@ -1,16 +1,14 @@
 from typing import Type, TypeVar, Generic
 
-from pydantic import BaseModel
 from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from config.database.db_helper import db_helper
 from models.base_model import Base
-from models.pet import Pet
 from repositories.base_repository import AbstractRepository
+from utils.response_create_pet_util import create_response_util
 
-ModelType = TypeVar("ModelType", bound=Base)
-CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
+ModelType = TypeVar("ModelType")
+CreateSchemaType = TypeVar("CreateSchemaType", bound=Base)
 
 
 class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaType]):
@@ -25,7 +23,7 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
             session.add(instance)
             await session.commit()
             await session.refresh(instance)
-            return instance
+            return create_response_util(data, instance.id, instance.created_at)
 
     async def delete(self, **filters) -> None:
         async with self._session_factory() as session:
@@ -42,6 +40,3 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
             stmt = select(self.model).order_by(*order).limit(limit).offset(offset)
             row = await session.execute(stmt)
             return row.scalars().all()
-
-
-db_repository = SqlAlchemyRepository(model=Pet, db_session=db_helper.get_db_session)

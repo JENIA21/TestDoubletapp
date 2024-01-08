@@ -1,30 +1,37 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
+
 
 from models.pet import TypePet
-from utils.pet_utils import crate_pet_id
 
 
-class PetSupport(BaseModel):
-    id: str
+class Support(BaseModel):
+    id: str | None = None
 
 
-class PhotoCreate(PetSupport):
+class PhotoCreate(Support):
     file: bytes
 
 
-class PetCreate(BaseModel):
+class PetSupport(Support):
     name: str
-    year: int
     type: TypePet
-    photo: list[PhotoCreate] | None = None
-    created_at: datetime | None = datetime.now()
-    id: str | None = crate_pet_id()
+    # photo: list[PhotoCreate] | None = None
+
+    @validator('type')
+    def validate_id(cls, value):
+        value = value.value
+        return value
 
 
-class PetCreateResponse(PetCreate, PetSupport):
-    pass
+class PetCreate(PetSupport):
+    year: int
+
+
+class PetCreateResponse(PetSupport):
+    age: int
+    created_at: datetime | None = None
 
 
 class PetGet(BaseModel):
@@ -39,16 +46,12 @@ class PetGetResponse(BaseModel):
 
 
 class PetDelete(BaseModel):
-    ids: list
+    ids: list[str]
 
 
 class PetDeleteResponse(PetDelete):
     pass
 
 
-class PhotoCreate(PetSupport):
-    file: bytes
-
-
-class PhotoCreateResponse(PetSupport):
+class PhotoCreateResponse(Support):
     url: str
