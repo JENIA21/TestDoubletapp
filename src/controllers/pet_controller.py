@@ -10,11 +10,6 @@ from utils.pet_utils import crate_pet_id
 router = APIRouter()
 
 
-async def add_id(data):
-    data["id"] = crate_pet_id()
-    return data
-
-
 @router.post("/pets")
 async def create_pets(
         data: PetCreate,
