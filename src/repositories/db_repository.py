@@ -8,7 +8,6 @@ from models.photo_pet import Photo
 from repositories.base_repository import AbstractRepository
 from schemas.pet_schema import PetGetResponse, PetDeleteResponse, PetDelete, PhotoCreate, Support, PhotoCreateResponse
 from utils.operations_files_minio import creat_files_minio_files, delete_files_minio_files
-from utils.response_create_pet_util import create_response_util
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=Base)
@@ -26,7 +25,7 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
             session.add(instance)
             await session.commit()
             await session.refresh(instance)
-            return create_response_util(data, instance.id, instance.created_at)
+            return instance
 
     async def delete(self, ids: PetDelete) -> PetDeleteResponse:
         async with self._session_factory() as session:

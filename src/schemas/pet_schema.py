@@ -1,8 +1,7 @@
-from datetime import datetime
-from typing import List
+from datetime import datetime, date
+from typing import List, Any
 
-from pydantic import validator
-
+from pydantic import model_validator
 
 from models.pet import TypePet
 from schemas.base_schema import Base
@@ -23,32 +22,31 @@ class PetSupport(Base):
 class PetCreate(PetSupport):
     year: int
     type: TypePet
+
     # photo: List[PhotoCreate] | None = None
 
-    @validator('type')
-    def validate_type_create(cls, value):
-        if type(value) is not str:
-            value = value.value
-        return value
+    @model_validator(mode='after')
+    def year(self, data: Any):
+        self.type = self.type.value
+        return self
 
 
 class PetCreateResponse(PetSupport, Support):
-    age: int | None = None
+    age: int
     type: TypePet
     photo: List[PhotoCreate] | None = []
     created_at: datetime | None = None
 
-    @validator('type', pre=True)
-    def validate_type(cls, value):
-        if type(value) is not str:
-            value = value.value
-        return value
+    @model_validator(mode='before')
+    def year(self, data: Any):
+        self.age = date.today().year - self.year
+        self.type = self.type.value
+        return self
 
 
-class PetGet(Base):
-    limit: int | None = 20
-    offset: int | None = 0
-    has_photo: bool | None = None
+class PetDeleteErrors(Base):
+    id: str | None = None
+    error: str | None = None
 
 
 class PetDelete(Base):
@@ -57,7 +55,7 @@ class PetDelete(Base):
 
 class PetDeleteResponse(Base):
     deleted: int
-    errors: List[str] | None = []
+    errors: List[PetDeleteErrors] | None = []
     pass
 
 
