@@ -55,7 +55,9 @@ class PetDelete(Base):
     ids: List[str]
 
 
-class PetDeleteResponse(PetDelete):
+class PetDeleteResponse(Base):
+    deleted: int
+    errors: List[str] | None = []
     pass
 
 

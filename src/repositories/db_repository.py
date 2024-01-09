@@ -31,7 +31,7 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
             for id in ids.ids:
                 await session.execute(delete(self.model).filter_by(id=id))
             await session.commit()
-            return ids
+            return PetDeleteResponse(deleted=len(ids.ids))
 
     async def get_multi(
             self,
