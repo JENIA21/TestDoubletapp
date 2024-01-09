@@ -5,7 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from models.base_model import Base
 from repositories.base_repository import AbstractRepository
-from schemas.pet_schema import PetGetResponse, PetDeleteResponse, PetDelete
+from schemas.pet_schema import PetGetResponse, PetDeleteResponse, PetDelete, PhotoCreate, Support, PhotoCreateResponse
+from utils.add_files_minio import creat_files_minio_files
 from utils.response_create_pet_util import create_response_util
 
 ModelType = TypeVar("ModelType", bound=Base)
@@ -32,6 +33,15 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
                 await session.execute(delete(self.model).filter_by(id=id))
             await session.commit()
             return PetDeleteResponse(deleted=len(ids.ids))
+
+    async def add_photo(self, file: PhotoCreate, id: Support, filename: str) -> PhotoCreateResponse:
+        async with self._session_factory() as session:
+            url = creat_files_minio_files(file, filename=filename)
+            instance = self.model(id_photo=filename, pet_id=id)
+            session.add(instance)
+            await session.commit()
+            await session.refresh(instance)
+            return PhotoCreateResponse(id=instance.id, url=url)
 
     async def get_multi(
             self,

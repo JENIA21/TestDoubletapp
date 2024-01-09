@@ -12,7 +12,7 @@ class Support(Base):
     id: str | None = None
 
 
-class PhotoCreate(Support):
+class PhotoCreate(Base):
     file: bytes
 
 
