@@ -1,5 +1,6 @@
 from repositories.db_repository import SqlAlchemyRepository, ModelType
 from schemas.base_schema import PyModel
+from schemas.pet_schema import PetDelete, PetDeleteResponse
 
 
 class BaseService:
@@ -10,8 +11,13 @@ class BaseService:
     async def create(self, model: PyModel) -> ModelType:
         return await self.repository.create(data=model.model_dump())
 
-    async def delete(self, pk: int) -> None:
-        await self.repository.delete(id=pk)
+    async def delete(self, ids: PetDelete) -> PetDeleteResponse:
+        return await self.repository.delete(ids=ids)
 
-    async def get(self, pk: int) -> ModelType:
-        return await self.repository.get(id=pk)
+    async def get_multi(self,
+                        limit: int | None = 20,
+                        offset: int | None = 0,
+                        has_photo: bool | None = False) -> ModelType:
+        return await self.repository.get_multi(limit=limit,
+                                               offset=offset,
+                                               has_photo=has_photo)
