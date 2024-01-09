@@ -2,9 +2,9 @@ from fastapi import HTTPException, APIRouter, Security, UploadFile
 from starlette.status import HTTP_400_BAD_REQUEST
 
 
-from schemas.pet_schema import PetCreate, PetCreateResponse, PhotoCreate, PhotoCreateResponse, PetGetResponse, \
-    PetDeleteResponse, PetDelete, Support
-from services.file_add_service import file_service
+from schemas.pet_schema import (PetCreate, PetCreateResponse, PhotoCreateResponse,
+                                PetGetResponse, PetDeleteResponse, PetDelete)
+from services.photo_service import file_service
 from services.pet_servise import pet_service
 from utils.key_authentication import get_api_key
 

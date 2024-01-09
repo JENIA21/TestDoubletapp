@@ -5,8 +5,6 @@ from dotenv import load_dotenv
 
 from minio import Minio
 
-from schemas.pet_schema import PhotoCreate
-
 
 def connect_to_minio():
     load_dotenv('src')
@@ -25,7 +23,7 @@ def get_files_minio(file: str, bucket_name: str = "img"):
     return client.presigned_get_object(bucket_name, file, expires=timedelta(hours=3))
 
 
-def creat_files_minio_files(file: PhotoCreate, filename: str, bucket_name: str = "img"):
+def creat_files_minio_files(file: object, filename: str, bucket_name: str = "img"):
     client = connect_to_minio()
     client.put_object(bucket_name, filename, io.BytesIO(file), length=io.BytesIO(file).getbuffer().nbytes)
     url = client.presigned_get_object(bucket_name, filename, expires=timedelta(hours=3))

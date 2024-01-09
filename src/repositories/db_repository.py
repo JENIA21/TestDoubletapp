@@ -1,4 +1,4 @@
-from typing import Type, TypeVar, Generic, List
+from typing import Type, TypeVar, Generic
 
 from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -52,7 +52,7 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
             limit: int = 100,
             offset: int = 0,
             has_photo: bool = False
-    ) -> List[ModelType]:
+    ) -> PetGetResponse:
         async with self._session_factory() as session:
             stmt = select(self.model).order_by("id").limit(limit).offset(offset)
             row = await session.execute(stmt)

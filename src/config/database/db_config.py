@@ -5,11 +5,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class ConfigDataBase(BaseSettings):
-    DB_USER: str = "jenia"
-    DB_PASS: str = "jenia2002"
-    DB_HOST: str = "localhost"
-    DB_PORT: str = "5432"
-    DB_NAME: str = "pet"
+    DB_USER: str
+    DB_PASS: str
+    DB_HOST: str
+    DB_PORT: str
+    DB_NAME: str
     DB_ECHO_LOG: bool = False
 
     @property
@@ -19,7 +19,7 @@ class ConfigDataBase(BaseSettings):
             f"{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
         )
 
-    model_config = SettingsConfigDict(env_file="src/.env")
+    model_config = SettingsConfigDict(env_file=".env")
 
 
 settings_db = ConfigDataBase()
