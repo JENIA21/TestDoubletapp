@@ -4,9 +4,10 @@ from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from models.base_model import Base
+from models.photo_pet import Photo
 from repositories.base_repository import AbstractRepository
 from schemas.pet_schema import PetGetResponse, PetDeleteResponse, PetDelete, PhotoCreate, Support, PhotoCreateResponse
-from utils.add_files_minio import creat_files_minio_files
+from utils.operations_files_minio import creat_files_minio_files, delete_files_minio_files
 from utils.response_create_pet_util import create_response_util
 
 ModelType = TypeVar("ModelType", bound=Base)
@@ -30,7 +31,11 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
     async def delete(self, ids: PetDelete) -> PetDeleteResponse:
         async with self._session_factory() as session:
             for id in ids.ids:
+                img_name = await session.execute(select(Photo).filter_by(pet_id=id))
+                delete_files_minio_files(img_name.scalars().all())
+                await session.execute(delete(Photo).filter_by(pet_id=id))
                 await session.execute(delete(self.model).filter_by(id=id))
+
             await session.commit()
             return PetDeleteResponse(deleted=len(ids.ids))
 
