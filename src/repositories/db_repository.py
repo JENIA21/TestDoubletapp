@@ -43,7 +43,6 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
                 await session.execute(delete(self.model).filter_by(id=id))
 
             await session.commit()
-            await session.refresh()
             return PetDeleteResponse(deleted=len(ids.ids))
 
     async def add_photo(self, file: UploadFile, id: Support) -> PhotoCreateResponse:
@@ -62,7 +61,7 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
             has_photo: bool = False
     ) -> PetGetResponse:
         async with self._session_factory() as session:
-            stmt = select(self.model, Photo).order_by("id").limit(limit).offset(offset).join(Photo, Photo.pet_id==self.model.id)
+            stmt = select(self.model).order_by("id").limit(limit).offset(offset)
             row = await session.execute(stmt)
             data = row.scalars().all()
             return PetGetResponse(count=len(data), items=data)

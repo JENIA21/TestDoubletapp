@@ -25,7 +25,8 @@ class PetSupport(Base):
     name: str
 
 
-class PhotoCreateResponse(Support):
+class PhotoCreateResponse(Base):
+    id: str
     url: str
 
 
