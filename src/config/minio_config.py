@@ -6,8 +6,6 @@ load_dotenv()
 
 
 class SettingsMinio(BaseSettings):
-    MINIO_ROOT_USER: str
-    MINIO_ROOT_PASSWORD: str
     ACCESSKEY: str
     SECRETKEY: str
 
