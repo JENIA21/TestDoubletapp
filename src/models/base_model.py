@@ -3,12 +3,13 @@ from datetime import datetime
 
 from sqlalchemy import func
 from sqlalchemy.orm import DeclarativeBase, declared_attr, Mapped, mapped_column
+from sqlalchemy.dialects.postgresql import UUID
 
 
 class Base(DeclarativeBase):
     __abstarct__ = True
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=str(uuid.uuid4()))
+    id: Mapped[str] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     created_at: Mapped[datetime] = mapped_column(default=func.now())
 
 

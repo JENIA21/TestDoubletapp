@@ -1,4 +1,4 @@
-from repositories.pet_repository import pet_repository
+from src.repositories.pet_repository import pet_repository
 from src.services.base_service import BaseService
 
 

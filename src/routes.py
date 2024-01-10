@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from controllers import pet_controller
+from src.controllers import pet_controller
 
 
 def get_apps_router():

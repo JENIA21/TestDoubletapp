@@ -2,11 +2,11 @@ from fastapi import HTTPException, APIRouter, Security, UploadFile
 from starlette.status import HTTP_400_BAD_REQUEST
 
 
-from schemas.pet_schema import (PetCreate, PetCreateResponse, PhotoCreateResponse,
+from src.schemas.pet_schema import (PetCreate, PetCreateResponse, PhotoCreateResponse,
                                 PetGetResponse, PetDeleteResponse, PetDelete)
-from services.photo_service import file_service
-from services.pet_servise import pet_service
-from utils.key_authentication import get_api_key
+from src.services.photo_service import file_service
+from src.services.pet_servise import pet_service
+from src.utils.key_authentication import get_api_key
 
 
 router = APIRouter()
@@ -15,10 +15,11 @@ router = APIRouter()
 @router.post("/pets")
 async def create_pets(
         data: PetCreate,
+        file: UploadFile,
         api_key: str = Security(get_api_key)
 ) -> PetCreateResponse:
     try:
-        return await pet_service.create(model=data)
+        return await pet_service.create(model=data, file=file)
     except Exception as e:
         raise HTTPException(HTTP_400_BAD_REQUEST, str(e))
 
@@ -56,6 +57,6 @@ async def add_photo_for_pet(
         api_key: str = Security(get_api_key)
 ) -> PhotoCreateResponse:
     try:
-        return await file_service.add_photo(file=await file.read(), id=id, filename=file.filename)
+        return await file_service.add_photo(file=file, id=id)
     except Exception as e:
         raise HTTPException(HTTP_400_BAD_REQUEST, str(e))

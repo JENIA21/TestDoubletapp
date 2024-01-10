@@ -1,4 +1,4 @@
-from repositories.file_repository import file_repository
+from src.repositories.file_repository import file_repository
 from src.services.base_service import BaseService
 
 
