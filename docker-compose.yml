@@ -34,6 +34,9 @@ services:
       - "8000:8000"
     expose:
       - "8000"
+    command: bash -c "alembic stamp head && alembic revision --autogenerate && alembic upgrade head && python main.py"
+    depends_on:
+      - app
 
   nginx:
     image: nginx:1.19.3
