@@ -1,17 +1,17 @@
 import io
-import os
+
 from datetime import timedelta
-from dotenv import load_dotenv
 
 from minio import Minio
 
+from src.config.minio_config import settings
+
 
 def connect_to_minio():
-    load_dotenv('src')
-    MY_ENV_VAR = os.getenv('MY_ENV_VAR')
-    client = Minio("localhost:9000",
-                   access_key="nyjnzw6WYUd5xSUAzUvc",
-                   secret_key="L8tMNjLno5hGXuOZMDi6w7aFizK78l8n3QwiE7Rw",
+
+    client = Minio("minio:9000",
+                   access_key=settings.ACCESSKEY,
+                   secret_key=settings.SECRETKEY,
                    secure=False
                    )
     return client
