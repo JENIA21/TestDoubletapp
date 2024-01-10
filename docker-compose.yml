@@ -23,8 +23,8 @@ services:
       - /mnt/hdd/minio/data:/export
       - /mnt/hdd/minio/config:/root/.minio
     environment:
-      MINIO_ROOT_USER: "MINIO_ROOT_USER"
-      MINIO_ROOT_PASSWORD: "MINIO_ROOT_PASSWORD"
+      MINIO_ROOT_USER: "$MINIO_ROOT_USER"
+      MINIO_ROOT_PASSWORD: "$MINIO_ROOT_PASSWORD"
 
   app:
     build: .

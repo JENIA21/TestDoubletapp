@@ -2,15 +2,16 @@ import io
 
 from datetime import timedelta
 
-
 from minio import Minio
+
+from src.config.minio_config import settings
 
 
 def connect_to_minio():
 
     client = Minio("minio:9000",
-                   access_key="nyjnzw6WYUd5xSUAzUvc",
-                   secret_key="L8tMNjLno5hGXuOZMDi6w7aFizK78l8n3QwiE7Rw",
+                   access_key=settings.ACCESSKEY,
+                   secret_key=settings.SECRETKEY,
                    secure=False
                    )
     return client
