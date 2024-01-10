@@ -32,17 +32,15 @@ services:
     container_name: 'app'
     ports:
       - 8000:8000
-#    volumes:
-#      - static_volume:/pets_app/vol/web/
-#      - ./logs:/pets_app/logs
 
-  nginx:
-    image: nginx:latest
-    container_name: 'nginx'
-    ports:
-      - 8080:8080
+
+#  nginx:
+#    image: nginx:latest
+#    container_name: 'nginx'
+#    ports:
+#      - 8080:8080
 #    volumes:
 #      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
 #      - static_volume:/vol/static/
-    depends_on:
-      - server
+#    depends_on:
+#      - server
