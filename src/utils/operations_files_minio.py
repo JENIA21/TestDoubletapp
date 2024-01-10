@@ -4,14 +4,14 @@ from datetime import timedelta
 
 from minio import Minio
 
-from src.config.minio_config import settings
+from src.config.minio_config import settings_minio
 
 
 def connect_to_minio():
 
     client = Minio("minio:9000",
-                   access_key=settings.ACCESSKEY,
-                   secret_key=settings.SECRETKEY,
+                   access_key=settings_minio.ACCESSKEY,
+                   secret_key=settings_minio.SECRETKEY,
                    secure=False
                    )
     return client

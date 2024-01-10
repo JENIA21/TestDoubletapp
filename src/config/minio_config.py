@@ -6,10 +6,7 @@ load_dotenv()
 
 
 class SettingsMinio(BaseSettings):
-    ACCESSKEY: str
-    SECRETKEY: str
+    ACCESS_KEY: str
+    SECRET_KEY: str
 
-    model_config = SettingsConfigDict(env_file=".env.minio")
-
-
-settings = SettingsMinio()
+settings_minio = SettingsMinio()
