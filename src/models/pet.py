@@ -1,20 +1,20 @@
 import enum
 
-from sqlalchemy import String
-from sqlalchemy.orm import declared_attr, Mapped, mapped_column
+from sqlalchemy import String, Enum
+from sqlalchemy.orm import Mapped, mapped_column
 
-from  base_model import Base
+from src.models.base_model import Base
 
 
 class TypePet(enum.Enum):
-    DOG = "dog"
-    CAT = "cat"
+    dog = "dog"
+    cat = "cat"
 
 
 class Pet(Base):
     __tablename__ = "pet"
+    __table_args__ = {'extend_existing': True}
 
     name: Mapped[str] = mapped_column(String(50))
-    age: Mapped[int]
-    is_photo: Mapped[bool]
-    type_pet: Mapped[TypePet]
+    year: Mapped[int]
+    type: Mapped[str] = mapped_column(Enum(TypePet))

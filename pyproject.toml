@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "testdubletapp"
+version = "0.1.0"
+description = "test task"
+authors = ["JENIA21 <jenia8513@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+unicorn = "^2.0.1.post1"
+fastapi = "^0.108.0"
+alembic = "^1.13.1"
+pydantic = "^2.5.3"
+pydantic-settings = "^2.1.0"
+uuid = "^1.30"
+sqlalchemy = "^2.0.25"
+minio = "^7.2.3"
+uvicorn = "^0.25.0"
+asyncpg = "^0.29.0"
+python-multipart = "^0.0.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
