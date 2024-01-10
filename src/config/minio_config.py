@@ -9,4 +9,5 @@ class SettingsMinio(BaseSettings):
     ACCESS_KEY: str
     SECRET_KEY: str
 
+
 settings_minio = SettingsMinio()

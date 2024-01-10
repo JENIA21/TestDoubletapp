@@ -10,8 +10,8 @@ from src.config.minio_config import settings_minio
 def connect_to_minio():
 
     client = Minio("minio:9000",
-                   access_key=settings_minio.ACCESSKEY,
-                   secret_key=settings_minio.SECRETKEY,
+                   access_key=settings_minio.ACCESS_KEY,
+                   secret_key=settings_minio.SECRET_KEY,
                    secure=False
                    )
     return client
